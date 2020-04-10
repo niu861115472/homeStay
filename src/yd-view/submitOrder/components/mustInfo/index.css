@@ -1,0 +1,34 @@
+.must-info{
+    margin-top: 20px;
+    padding: 0 10px 0px 10px;
+    font-size: 32px;
+    border: 1px solid #f1f1f1;
+    border-radius: 10px;
+    background: #ffffff;
+}
+.tittle{
+    border-bottom: 1px solid #f1f1f1;
+    padding-bottom: 20px;
+    color: rgb(221, 50, 84);
+}
+.form{
+   margin-top: 25px;
+}
+.customer-name{
+    display: flex;
+    padding: 20px 0 20px 30px;
+    border-bottom: 1px solid #f1f1f1;
+}
+.customer-name p{
+    width: 25%;
+    height: 73px;
+    line-height: 73px;
+    margin: 0;
+}
+.customer-name input{
+    width: 70%;
+    height: 70px;
+    padding-left: 15px;
+    border: 1px solid #adabab;
+    border-radius: 5px;
+}

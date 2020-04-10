@@ -1,0 +1,36 @@
+li{
+    list-style: none;
+}
+a{
+    color:#000000
+}
+.item-box{
+    display: flex;
+    justify-content: space-between;
+    border: 1px solid #bdb8b8;
+    background: #ffffff;
+    border-radius: 10px;
+    padding: 20px;
+}
+.left-content ul li{
+    margin-bottom: 20px;
+}
+.order-item-title{
+    font-size: 34px;
+    color: #4b4949;
+}
+.right-content{
+    display: table;
+    height: 300px;
+    margin: auto 0;
+    color: #000000;
+}
+.right-content div{
+    width: 150px;
+    height: 70px;
+    line-height: 70px;
+    margin-top: 60px;
+    text-align: center;
+    border: 1px solid #bdb8b8;
+    border-radius: 5px;
+}

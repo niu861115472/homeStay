@@ -1,0 +1,55 @@
+.am-list-item, .am-list-extra{
+    font-size: 32px !important;
+}
+.select-home{
+    margin-bottom: 20px;
+    padding-left: 30px;
+}
+.order-id{
+    padding-left: 30px;
+}
+.add-order{
+    padding: 20px;
+    margin: 20px;
+    font-size: 32px !important;
+    background: #ffffff;
+}
+#select{
+    width: 67%;
+    height: 70px;
+    margin-left: 50px;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+#source{
+    width: 67%;
+    height: 70px;
+    margin-left: 115px;
+    margin-top: 30px;
+    padding: 0 10px;
+    border-radius: 5px;
+}
+.order-input{
+    border: 1px solid rgb(169, 169, 169);
+    border-radius: 5px;
+    width: 70%;
+    height:70px;
+    padding: 0 10px;
+    float: right;
+}
+.title{
+    position: relative;
+    top: 10px;
+}
+.clear{
+    clear:both
+}
+.submit{
+    width: 100%;
+    margin-top: 100px;
+    background: #e4657e;
+    color: #ffffff;
+    height: 90px;
+    line-height:90px;
+    text-align: center;
+} 

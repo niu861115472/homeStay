@@ -1,0 +1,52 @@
+
+.phone-input{
+    padding: 0 15px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 5px;
+    background: #ffffff;
+}
+.input{
+    height: 70px;
+    margin-left: 30px;
+    background: #ffffff;
+    border: none;
+    outline: none;
+}
+.capcha{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 20px;
+    background: #ffffff;
+}
+.cap-input{
+    width: 250px;
+}
+.left{
+    padding: 0 15px;
+    height: 100px;
+    line-height: 100px;
+    border-radius: 5px;
+    background: #ffffff;
+}
+.right{
+    width: 250px;
+    height: 100px;
+    text-align: center;
+    line-height: 100px;
+    background: #e4657e;
+    color: #ffffff;
+}
+.login-btn{
+    background: #e4657e;
+    width: 100%;
+    color: #ffffff;
+    text-align: center;
+    height: 100px;
+    line-height: 100px;
+    margin-top: 50px;
+}
+.icon-down{
+    position: relative;
+    top: 7px;
+}

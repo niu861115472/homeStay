@@ -1,0 +1,48 @@
+.am-list-item .am-list-line .am-list-content{
+    font-size: 32px;
+}
+.room-item{
+    display: flex;
+    margin-top: 25px;
+    border-bottom: 1px solid #e5e2e2;
+}
+.room-pic{
+    width: 210px;
+    height: 210px;
+}
+.room-pic img{
+    width: 100%;
+    height: 100%;
+}
+.room-content{
+    margin-left: 20px;
+}
+.room-content p{
+    font-size: 28px;
+    margin: 0 0 12px 0;
+}
+.room-content p:nth-of-type(2){
+    width: 300px;
+    display: -webkit-box;
+    -webkit-box-orient: vertical;
+    -webkit-line-clamp: 3;  
+    overflow: hidden;
+}
+.room-content p:nth-of-type(3){
+    color: darkgreen;
+}
+.room-content p:nth-of-type(4){
+    font-size: 40px;
+    color: coral;
+}
+.room-reserve{
+    width: 150px;
+    height: 70px;
+    line-height: 70px;
+    font-size: 32px;
+    text-align: center;
+    margin: auto 0 auto 20px;
+    border-radius: 8px;
+    background: coral;
+    color: #ffffff;
+}

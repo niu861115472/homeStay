@@ -1,0 +1,53 @@
+.order-pay{
+    margin: 20px;
+    border: 1px solid #f1f1f1;
+    border-radius: 15px;
+    background: #ffffff;
+    font-size: 32px;
+}
+.order-pay p{
+    margin-left: 20px;
+}
+.order-pay p:nth-of-type(3){
+    color: #adabab;
+}
+.pay-btn,
+.pay--status-btn{
+    display: flex;
+}
+.pay-btn div{
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+    color: #ffffff;
+    border:1px solid #f1f1f1
+}
+.popup-list .am-list-body {
+    overflow: auto;
+}
+.pay_status{
+    width: 100%;
+    text-align: center;
+    height: 80px;
+    line-height: 80px;
+    color: #ffffff;
+    border:1px solid #f1f1f1;
+    background:#969494
+}
+.had-cancel,
+.complete{
+    width: 100%;
+    background: #838282;
+}
+.had-pay{
+    width: 50%;
+    background: rgb(224, 95, 8);
+}
+.no-pay{
+    width: 50%;
+    background: rgb(211, 90, 10);
+}
+.cancel{
+    width: 50%;
+    background: #838282;
+}

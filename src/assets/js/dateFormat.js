@@ -8,7 +8,8 @@ export const iosFormat = (date) =>{
 }
 
 export const formatZH = (date) =>{
-    console.log(new Date(Date.parse(date)))
+    let iosDate = moment(date).format("YYYY/MM/DD HH:mm:ss")
+    console.log(new Date(Date.parse(iosDate)))
     return new Date(Date.parse(date))
 }
 
@@ -22,7 +23,8 @@ export const normalFormat = (date) =>{
 
 export const formatWeek = (date) =>{
     const weekArray = new Array("日", "一", "二", "三", "四", "五", "六")
-    return weekArray[new Date(date).getDay()]
+    return weekArray[moment(date).format('E')]
+    // return moment(date).format('E')
 }
 
 export const formatDays = (stay,leave) =>{

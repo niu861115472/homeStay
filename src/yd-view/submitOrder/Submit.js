@@ -1,11 +1,10 @@
 import React, { Component } from 'react';
-import { Toast, WhiteSpace, WingBlank } from 'antd-mobile'
+import { Toast } from 'antd-mobile'
 import { format, noYearFormat, normalFormat, formatWeek, formatDays } from '../../assets/js/dateFormat'
 import MustInfo from './components/mustInfo/MustInfo'
 import SelectInfo from './components/selectInfo/SelectInfo'
 import { withRouter } from 'react-router-dom'
 import { request, config } from '../../assets/api/index'
-import PayModal from '../payModal/payModal'
 import './submit.css'
 
 class Submit extends Component {
@@ -16,8 +15,11 @@ class Submit extends Component {
             selectInfo: '',
             modal: false,
             days: '',
-            orderId:''
+            orderId: ''
         };
+    }
+    componentDidMount() {
+        document.title = '提交订单'
     }
     getChildrenMsg(result, msg) {
         this.setState({
@@ -31,7 +33,7 @@ class Submit extends Component {
     }
     submitOrder() {
         let data = {
-            hotelId: sessionStorage.getItem('hotelId'),
+            hotelId: localStorage.getItem('hotelId'),
             houseId: this.props.location.state.houseId,
             liveTime: this.props.location.state.stay,
             leaveTime: this.props.location.state.leave,
@@ -48,29 +50,29 @@ class Submit extends Component {
             type: '2',
             payStatus: '2'
         }
-        request.post(config.api.submitOrder, data)
-            .then((data) => {
-                if (data.success) {
-                    this.props.history.push({
-                        pathname:'/orderDetail',
-                        state:{
-                            orderId:data.result[0].id
-                        }
-                    })
-                }
-            })
-            .catch(err => console.log(err))
+        Toast.loading('Loading...', 3, () => {
+            request.post(config.api.submitOrder, data)
+                .then((data) => {
+                    if (data.success) {
+                        Toast.hide()
+                        this.props.history.push({
+                            pathname: '/orderDetail',
+                            state: {
+                                orderId: data.result[0].id
+                            }
+                        })
+                    }else{
+                        Toast.info(data.msg)
+                    }
+                })
+                .catch(err => console.log(err))
+        })
     }
     handleSubmitOrder() {
         this.submitOrder()
-        // this.setState({
-        //     modal:true
-        // })
     }
     render() {
-        const { name, introduce,stay,leave,price } = this.props.location.state || ''
-        // const stay = this.props.location.state.stay || '1'
-        // const leave = this.props.location.state.leave || null
+        const { name, introduce, stay, leave, price } = this.props.location.state || ''
         const stayS = noYearFormat(stay)
         const leaveS = noYearFormat(leave)
         this.state.days = formatDays(stay, leave)
@@ -90,8 +92,8 @@ class Submit extends Component {
                 <div className="submit-content">
                     <p>￥{fee}</p>
                     {/* <WingBlank> */}
-                        <div className="submit-btn" onClick={this.handleSubmitOrder.bind(this)}>提交订单</div>
-                        {/* <WhiteSpace />
+                    <div className="submit-btn" onClick={this.handleSubmitOrder.bind(this)}>提交订单</div>
+                    {/* <WhiteSpace />
                     </WingBlank> */}
                 </div>
                 {/* <PayModal price={price} modal={this.state.modal} orderId={this.state.orderId}  /> */}

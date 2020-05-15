@@ -24,7 +24,7 @@ class OrderList extends Component {
     }
     getOrderList() {
         request.get(config.api.getOrders, {
-            hotelId: sessionStorage.getItem('hotelId'),
+            hotelId: localStorage.getItem('hotelId'),
             telephone: localStorage.getItem('tel')
         })
             .then(data => {

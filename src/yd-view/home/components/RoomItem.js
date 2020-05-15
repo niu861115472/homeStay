@@ -28,7 +28,7 @@ class RoomItem extends Component {
                     <p>{this.props.name}</p>
                     <p>{this.props.introduce}</p>
                     <p>提前48小时可免费取消</p>
-                    <p>{this.props.price}</p>
+                    <p>￥{this.props.price}</p>
                 </div>
                 <Link to={path}>
                     <div className="room-reserve">预订</div>

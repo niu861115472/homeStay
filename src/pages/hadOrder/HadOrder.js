@@ -8,21 +8,24 @@ class HadOrder extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            list: []
+            list: [],
+            childrenMsg: ''
         };
     }
-    componentDidMount(){
+    componentDidMount() {
+        document.title = "订单"
         this.getOrderList()
     }
     getOrderList() {
-        request.get(config.api.getOrders,{
-            hotelId:sessionStorage.getItem('hotelId')
+        request.get(config.api.getOrders, {
+            hotelId: sessionStorage.getItem('manager_hotelId'),
+            // status:0
         })
-        .then(data =>{
-            this.setState({
-                list: data.result
+            .then(data => {
+                this.setState({
+                    list: data.result
+                })
             })
-        })
     }
     render() {
         return (
@@ -30,21 +33,27 @@ class HadOrder extends Component {
                 {
                     this.state.list.map((item, index) => {
                         return (
-                            <OrderItem
-                                key={index}
-                                orderId={item.id}
-                                houseId={item.house_id}
-                                roomId={item.house_name}
-                                inTime={item.in_time}
-                                leaveTime={item.leave_time}
-                                customer={item.name}
-                                idCard={item.id_card}
-                                phone={item.telephone}
-                                source={item.source}
-                                price={item.total_fee}
-                                index={index}
-                                parent={this}
-                            />
+                            <div key={index + item.id}>
+                                {
+                                    item.pay_status !=0 ?
+                                        <OrderItem
+                                            orderId={item.id}
+                                            houseId={item.house_id}
+                                            roomId={item.house_name}
+                                            inTime={item.in_time}
+                                            leaveTime={item.leave_time}
+                                            customer={item.name}
+                                            idCard={item.id_card}
+                                            phone={item.telephone}
+                                            source={item.source}
+                                            price={item.total_fee}
+                                            index={index}
+                                            parent={this}
+                                            getOrderList={this.getOrderList.bind(this)}
+                                        />
+                                        : null
+                                }
+                            </div>
                         )
                     })
                 }

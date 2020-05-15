@@ -16,8 +16,19 @@ class LoginForm extends Component {
             count: 60,
             liked: true,
             tel: '',
-            capth: ''
+            capth: '',
+            hotelId:''
         };
+    }
+    componentDidMount(){
+        
+        const hotelId = this.getKeyWord('hotelId')
+        const appId = this.getKeyWord('appId')
+        localStorage.setItem('hotelId', hotelId)
+        localStorage.setItem('appId', appId)
+    }
+    getKeyWord(name) {
+        return decodeURIComponent((new RegExp('[?|&]' + name + '=' + '([^&;]+?)(&|#|;|$)').exec(window.location.href) || [, ""])[1].replace(/\+/g, '%20')) || null
     }
     getPassword() {
         request.post(config.api.getPassword, {
@@ -36,7 +47,12 @@ class LoginForm extends Component {
                 if (data.success) {
                     localStorage.setItem('tel',this.state.tel || this.refs.phone.value)
                     sessionStorage.setItem('capth',this.state.capth || this.refs.capth.value)
-                    this.props.history.push('/home')
+                    // if(localStorage.getItem('code') != null || localStorage.getItem('code') != ''){
+                    //     this.props.history.push('/home')
+                    // }
+                    // else{
+                        this.props.history.push('/home')
+                    // }
                 }
             })
     }

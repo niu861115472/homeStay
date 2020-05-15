@@ -16,3 +16,10 @@
     overflow: auto;
     -webkit-overflow-scrolling:touch
 }
+.home-list .houseType{
+    font-size: 35px;
+    color: #e47e1e;
+    text-align: center;
+    font-weight: 550;
+    margin-top: 20px;
+}

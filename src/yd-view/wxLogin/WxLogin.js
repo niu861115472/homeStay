@@ -5,18 +5,25 @@ import { withRouter } from 'react-router-dom'
 class WxLogin extends Component {
     constructor(props) {
         super(props);
-        this.state = {};
+        this.state = {
+            hotelId:''
+        };
+    }
+    componentWillMount(){
     }
     componentDidMount() {
         this.getCode()
+        console.log(document.referrer)
     }
     //获取code判断是否授权
     getCode() {
         const code = this.getUrlParam("code");
+        const appId = localStorage.getItem("appId")
         if (code == null || code == "") {
-            var test = 'http://plt.live-ctrl.com/homestay'
+            var test = 'http://demo.live-ctrl.com/homestay/#/home'
+            // wx46c6c44668d85f68
             window.location.href =
-                "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx46c6c44668d85f68&redirect_uri=" +
+                `https://open.weixin.qq.com/connect/oauth2/authorize?appid=${appId}&redirect_uri=` +
                 encodeURIComponent(test) +
                 "&response_type=code&scope=snsapi_userinfo&state=STATE#wechat_redirect";
         } else {
@@ -24,7 +31,7 @@ class WxLogin extends Component {
             this.getUserInfo(code)
         }
     }
-    // 获取code方法
+    // 获取code方法`
     getUrlParam(name) {
         var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
         var r = window.location.search.substr(1).match(reg);
@@ -41,7 +48,7 @@ class WxLogin extends Component {
         })
             .then(data => {
                 localStorage.setItem('userInfo', data.data.openid)
-                this.props.history.push('/ydLogin')
+                this.props.history.push('/home')
             })
         
     }

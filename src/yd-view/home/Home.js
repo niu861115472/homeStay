@@ -20,12 +20,14 @@ class Home extends Component {
             stay: now,
             leave: leaveTime,
             rooms: [],
+            houseTypes: [],
             cTime: '',
             lTime: ''
         }
     }
     componentDidMount() {
-        const id = sessionStorage.getItem('hotelId')
+        console.log(document.referrer)
+        const id = localStorage.getItem('hotelId')
         gethotelTime(id).then(data => {
             this.setState({
                 cTime: data.result[0].inTime,
@@ -41,13 +43,22 @@ class Home extends Component {
     getHotelRooms(stay, leave) {
 
         request.get(config.api.getHotelList, {
-            hotelId: '907003670336145664',
+            hotelId: localStorage.getItem('hotelId'),
             liveTime: stay,
             leaveTime: leave
         })
             .then((data) => {
+                const arr = data.result.sort((a, b) => {
+                    if (a['houseTypex'] != b['houseTypex']) {
+                        return a['houseTypex'].localeCompare(b['houseTypex'])
+                    }
+                })
+                const houseTypes = data.result.map((item) => {
+                    return item.houseTypex
+                })
                 this.setState({
-                    rooms: data.result
+                    rooms: arr,
+                    houseTypes: Array.from(new Set(houseTypes))
                 })
             })
             .catch(err => console.log(err))
@@ -65,7 +76,8 @@ class Home extends Component {
         this.getHotelRooms(stay2, leave2)
     }
     render() {
-        const { rooms } = this.state
+        const { rooms, houseTypes } = this.state
+        console.log(houseTypes)
         return (
             <div className="home">
                 <List className="date-picker-list" style={{ backgroundColor: 'white' }}>
@@ -89,23 +101,41 @@ class Home extends Component {
                         <List.Item arrow="horizontal">离店时间 {this.state.lTime}</List.Item>
                     </DatePicker>
                 </List>
-
-                <div className="home-list">
+                <div className="housetype-list">
                     {
-                        rooms.map((item, index) => {
+                        houseTypes.map((item, index) => {
                             return (
-                                <RoomItem
-                                    key={index}
-                                    pic={item.picture}
-                                    name={item.name}
-                                    introduce={item.assort + ' ' + item.profiles}
-                                    price={item.price}
-                                    houseId={item.id}
-                                    price={item.defaultPrice}
-                                    cTime={format(this.state.stay) + ' ' + item.inTime}
-                                    lTime={format(this.state.leave) + ' ' + item.leaveTime}
-                                />
+                                <div className="home-list" key={index + item}>
+                                    <p className="houseType">{item}</p>
+                                    {
+                                        rooms.map((childItem, index) => {
+                                            return (
+                                                <div key={index + childItem}>
+                                                    {
+
+                                                        item == childItem.houseTypex ?
+                                                            <RoomItem
+                                                                
+                                                                pic={childItem.picture}
+                                                                name={childItem.name}
+                                                                introduce={childItem.houseTypex}
+                                                                price={childItem.price}
+                                                                houseId={childItem.id}
+                                                                price={childItem.defaultPrice}
+                                                                cTime={format(this.state.stay) + ' ' + childItem.inTime}
+                                                                lTime={format(this.state.leave) + ' ' + childItem.leaveTime}
+                                                            /> : null
+
+                                                    }
+                                                </div>
+
+                                            )
+                                        })
+                                    }
+                                </div>
+
                             )
+
                         })
                     }
                 </div>

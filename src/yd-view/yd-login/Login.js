@@ -7,6 +7,11 @@ class YdLogin extends Component {
         super(props);
         this.state = {};
     }
+    componentDidMount(){
+
+        // const hotelId = this.props.location.state.hotelId
+        // sessionStorage.setItem('hotelId',hotelId)
+    }
     render() {
         return (
             <div className="login">

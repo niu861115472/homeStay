@@ -13,7 +13,7 @@ export const config = {
     },
     api: {
         // base: 'http://192.168.0.52:8888/aijukex/',
-        base: 'http://plt.live-ctrl.com/aijukex/',
+        base: 'http://demo.live-ctrl.com/aijukex/',
         getHotelList: 'reserva_getHotelHouses',
         submitOrder:'reserva_submitOrder',
         getOrders:'reserva_getOrders',

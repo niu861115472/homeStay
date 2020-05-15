@@ -34,8 +34,8 @@ class payModal extends Component {
     render() {
         const { value } = this.state
         const data = [
-            { value: 0, label: '微信' },
-            { value: 1, label: '支付宝' }
+            { value: 0, label: '微信' }
+            // { value: 1, label: '支付宝' }
         ]
         return (
             <WingBlank>

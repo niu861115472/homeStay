@@ -11,7 +11,7 @@ const nowTimeStamp = Date.now();
 const leaveTimeStamp = Date.now() + 24 * 60 * 60 * 1000
 const now = new Date(nowTimeStamp);
 const leaveTime = new Date(leaveTimeStamp);
-const id = sessionStorage.getItem('hotelId')
+const id = sessionStorage.getItem('manager_hotelId')
 
 class ChangeOrder extends Component {
     constructor(props) {
@@ -34,6 +34,7 @@ class ChangeOrder extends Component {
     }
     componentDidMount() {
         const { type, name, idCard, phone, inTime, leaveTime, house_id, roomId } = this.props.location.state
+
         if (type) {
             this.setState({
                 form: {
@@ -46,13 +47,15 @@ class ChangeOrder extends Component {
                 leave: formatZH(leaveTime)
             })
         }
-        const obj = {
-            id: house_id,
-            name: roomId
-        }
         gethotelTime(id).then(data => {
             const stay = format(this.state.stay) + ' ' + data.result[0].inTime
             const leave = format(this.state.leave) + ' ' + data.result[0].leaveTime
+            const obj = {
+                id: house_id,
+                name: roomId,
+                inTime: data.result[0].inTime,
+                leaveTime: data.result[0].leaveTime
+            }
 
             getHotelList(id, stay, leave).then((data) => {
                 this.setState({
@@ -74,12 +77,20 @@ class ChangeOrder extends Component {
         const stay = format(this.state.stay) + ' ' + this.state.homes[index].inTime
         const leave = format(this.state.leave) + ' ' + this.state.homes[index].leaveTime
         const { orderId } = this.props.location.state
-        const hotelId = sessionStorage.getItem('hotelId')
+        const hotelId = sessionStorage.getItem('manager_hotelId')
         const price = formatDays(stay, leave) * this.state.homes[index].defaultPrice
         const { name, phone, idCard } = this.state.form
-        console.log(name, phone, idCard, sourceIndex)
-        changeOrder(orderId, hotelId, houseId, stay, leave, name, phone, idCard, sourceIndex, price).then(data => {
-            this.props.history.push('/orderSort')
+        console.log(stay, leave, this.state.homes)
+
+        Toast.loading('Loading...', 3, () => {
+            changeOrder(orderId, hotelId, houseId, stay, leave, name, phone, idCard, sourceIndex, price).then(data => {
+                if (data.success) {
+                    Toast.hide()
+                    this.props.history.push('/hadOrder')
+                }else{
+                    Toast.info(data.msg)
+                }
+            });
         })
     }
     handleChange(key, event) {
@@ -96,18 +107,20 @@ class ChangeOrder extends Component {
     render() {
         const { homes } = this.state
         const obj = this.props.location.state
-        console.log(obj)
         const { roomId, type, orderId, name, idCard, phone } = obj == undefined ? this.state.form : obj
+        console.log(this.state.stay,this.state.leave)
+        // if(homes.length != 0)
         return (
             <div className="add-order">
-                <p className="order-id">订单号: {type ? orderId : 'XXXXXXXXXXXXXXXXX'}</p>
+                <p className="order-id">订单号: {orderId}</p>
                 <div className="select-home">
                     房间选择
                     <select
+                        defaultValue={roomId}
                         onChange={this.handleChange.bind(this, 'selectVal')} id="select">
                         {
                             homes.map((item, index) =>
-                                <option selected={roomId} key={index}>{item.name}</option>
+                                <option key={index}>{item.name}</option>
                             )
                         }
                     </select>
@@ -165,10 +178,11 @@ class ChangeOrder extends Component {
                         <div className="select-home">
                             来源
                             <select
+                                defaultValue={data[obj.source].come}
                                 onChange={this.handleChange.bind(this, 'source')} id="source">
                                 {
                                     data.map((item, index) =>
-                                <option key={index}>{item.come}</option>
+                                        <option key={index}>{item.come}</option>
                                     )
                                 }
                             </select>

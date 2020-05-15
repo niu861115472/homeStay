@@ -13,16 +13,20 @@ import Submit from '../yd-view/submitOrder/Submit'
 import OrderDetail from '../yd-view/orderDetail/OrderDetail'
 import Replenish from '../yd-view/replenish/Replenish'
 
+// console.log(hotelId)
+
+// const login = `/#/?hotelId=${hotelId}`
+
 function MyRouter() {
     return <Router>
         <Switch>
-            <Route path="/" exact component={WxLogin} />
-            <Route path="/" exact component={Login} />
+            {/* <Route path="/wxLogin" component={WxLogin} /> */}
+            {/* <Route path="/" component={Login} /> */}
             <Route path="/orderSort" component={Sort} />
             <Route path="/addOrder" component={AddOrder} />
             <Route path="/hadOrder" component={HadOrder} />
             <Route path="/changeOrder" component={ChangeOrder} />
-            <Route path="/ydLogin" component={YdLogin} />
+            <Route path="/" exact component={YdLogin} />
             <Route path="/home" component={Home} />
             <Route path="/order" component={OrderList} />
             <Route path="/Submit" component={Submit} />

@@ -11,7 +11,7 @@ const nowTimeStamp = Date.now();
 const leaveTimeStamp = Date.now() + 24 * 60 * 60 * 1000
 const now = new Date(nowTimeStamp);
 const leaveTime = new Date(leaveTimeStamp);
-const id = sessionStorage.getItem('hotelId')
+const id = sessionStorage.getItem('manager_hotelId')
 
 class AddOrder extends Component {
     constructor(props) {
@@ -34,6 +34,7 @@ class AddOrder extends Component {
         }
     }
     componentDidMount() {
+        document.title = "新增订单"
         gethotelTime(id).then(data => {
             const stay = format(this.state.stay) + ' ' + data.result[0].inTime
             const leave = format(this.state.leave) + ' ' + data.result[0].leaveTime
@@ -49,7 +50,7 @@ class AddOrder extends Component {
             })
         })
     }
-    
+
     handleSubmit() {
         const index = document.getElementById('select').selectedIndex
         const sourceIndex = document.getElementById('source').selectedIndex
@@ -57,30 +58,23 @@ class AddOrder extends Component {
         const stay = format(this.state.stay) + ' ' + this.state.homes[index].inTime
         const leave = format(this.state.leave) + ' ' + this.state.homes[index].leaveTime
         const { type, orderId } = this.props.location.state == undefined ? this.state.form : this.props.location.state
-        const hotelId = sessionStorage.getItem('hotelId')
+        const hotelId = sessionStorage.getItem('manager_hotelId')
         const price = formatDays(stay, leave) * this.state.homes[index].defaultPrice
         const { name, phone, idCard } = type ? this.props.location.state : this.state.form
         console.log(stay, leave)
-        if (!type) {
-            if (!name) {
-                Toast.info("请填写姓名")
-                return
-            }
-            if (!idCard) {
-                Toast.info("请填写身份证号")
-                return
-            }
-            if (!phone) {
-                Toast.info("请填写手机号")
-                return
-            }
-        }
-        if (type == true) {
-            changeOrder(orderId, hotelId, houseId, normalFormat(stay), normalFormat(leave), name, phone, idCard, sourceIndex, price).then(data => { })
-        } else {
-            submitOrder(hotelId, houseId, normalFormat(stay), normalFormat(leave), name, phone, idCard, sourceIndex).then(data => { })
-        }
-        this.props.history.push('/orderSort')
+
+        Toast.loading('Loading...', 3, () => {
+            submitOrder(hotelId, houseId, normalFormat(stay), normalFormat(leave), name, phone, idCard, sourceIndex).then(data => {
+                if (data.success) {
+                    Toast.hide()
+                    window.location.href = 'http://demo.live-ctrl.com/www/#/home'
+                }else{
+                    Toast.info(data.msg)
+                }
+            })
+        });
+
+
     }
     handleChange(key, event) {
         const { form } = this.state
@@ -118,9 +112,10 @@ class AddOrder extends Component {
         const { homes } = this.state
         const obj = this.props.location.state
         const { type, orderId, name, idCard, phone } = obj == undefined ? this.state.form : obj
+        console.log(this.state.stay,this.state.leave)
         return (
             <div className="add-order">
-                <p className="order-id">订单号: {type ? orderId : 'XXXXXXXXXXXXXXXXX'}</p>
+                {/* <p className="order-id">订单号: {type ? orderId : 'XXXXXXXXXXXXXXXXX'}</p> */}
                 <div className="select-home">
                     房间选择
                     <select
@@ -188,6 +183,7 @@ class AddOrder extends Component {
                         <div className="select-home">
                             来源
                             <select
+                                // defaultValue="飞猪"
                                 onChange={this.handleChange.bind(this, 'source')} id="source">
                                 {
                                     data.map((item, index) =>
